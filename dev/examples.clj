@@ -1,11 +1,11 @@
 (ns examples
-  (:require [com.stuartsierra.component :as component]))
+  (:require [quile.component :as component]))
 
 ;;; Dummy functions to use in the examples
 
 (defn connect-to-database [host port]
   (println ";; Opening database connection")
-  (reify java.io.Closeable
+  (reify #+clj java.io.Closeable #+cljs object
     (close [_] (println ";; Closing database connection"))))
 
 (defn execute-query [& _]

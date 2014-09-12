@@ -1,9 +1,19 @@
-(ns com.stuartsierra.component-test
-  (:require [clojure.test :refer (deftest is are)]
-            [clojure.set :refer (map-invert)]
-            [com.stuartsierra.component :as component]))
+(ns quile.component-test
+  #+clj (:require [clojure.test :as t :refer (is deftest are)]
+                  [quile.component :as component]
+                  [clojure.set :refer (map-invert)])
+  #+cljs (:require-macros [cemerick.cljs.test :refer (is deftest are)])
+  #+cljs (:require cemerick.cljs.test
+                   [quile.component :as component])
+  )
 
 (def ^:dynamic *log* nil)
+
+#+cljs
+(defn thread-bound? [& args] true)
+
+#+cljs
+(defn var [arg] arg)
 
 (defn- log [& args]
   (when (thread-bound? #'*log*)
@@ -38,7 +48,7 @@
     (assoc this ::started? false)))
 
 (defn component-a []
-  (->ComponentA (rand-int Integer/MAX_VALUE)))
+  (->ComponentA (rand-int #+clj Integer/MAX_VALUE #+cljs (.-MAX_VALUE js/Number))))
 
 (defrecord ComponentB [state a]
   component/Lifecycle
@@ -53,7 +63,7 @@
 
 (defn component-b []
   (component/using
-    (map->ComponentB {:state (rand-int Integer/MAX_VALUE)})
+    (map->ComponentB {:state (rand-int #+clj Integer/MAX_VALUE #+cljs (.-MAX_VALUE js/Number))})
     [:a]))
 
 (defrecord ComponentC [state a b]
@@ -71,7 +81,7 @@
 
 (defn component-c []
   (component/using
-    (map->ComponentC {:state (rand-int Integer/MAX_VALUE)})
+    (map->ComponentC {:state (rand-int #+clj Integer/MAX_VALUE #+cljs (.-MAX_VALUE js/Number))})
     [:a :b]))
 
 (defrecord ComponentD [state my-c b]
@@ -88,7 +98,7 @@
     (assoc this ::started? false)))
 
 (defn component-d []
-  (map->ComponentD {:state (rand-int Integer/MAX_VALUE)}))
+  (map->ComponentD {:state (rand-int #+clj Integer/MAX_VALUE #+cljs (.-MAX_VALUE js/Number))}))
 
 (defrecord ComponentE [state]
   component/Lifecycle
@@ -100,7 +110,7 @@
     (assoc this ::started? false)))
 
 (defn component-e []
-  (map->ComponentE {:state (rand-int Integer/MAX_VALUE)}))
+  (map->ComponentE {:state (rand-int #+clj Integer/MAX_VALUE #+cljs (.-MAX_VALUE js/Number))}))
 
 (defrecord System1 [d a e c b]  ; deliberately scrambled order
   component/Lifecycle
@@ -170,7 +180,7 @@
   ([error]
      (try (component/start
            (assoc (system-1) :c (error-start-c error)))
-          (catch Exception e e))))
+          (catch #+clj Exception #+cljs js/Error e e))))
 
 (deftest error-thrown-with-partial-system
   (let [ex (setup-error)]
@@ -184,7 +194,8 @@
 (deftest error-thrown-with-cause
   (let [error (ex-info "Boom!" {})
         ex (setup-error error)]
-    (is (identical? error (.getCause ^Exception ex)))))
+    (println error ex)
+    (is (identical? error (.getCause ex)))))
 
 (deftest error-is-from-component
   (let [error (ex-info "Boom!" {})
@@ -273,3 +284,5 @@
   (let [c (->ComponentWithoutLifecycle nil)]
     (is (= c (component/start c)))
     (is (= c (component/stop c)))))
+
+#+cljs (set! *main-cli-fn* #()) ;; node.js fu

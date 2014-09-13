@@ -15,9 +15,14 @@
 #+cljs
 (defn var [arg] arg)
 
+#+clj
 (defn- log [& args]
   (when (thread-bound? #'*log*)
     (set! *log* (conj *log* args))))
+
+#+cljs
+(defn- log [& args]
+  (set! *log* (conj *log* args)))
 
 (defn- ordering
   "Given an ordered collection of messages, returns a map from the
@@ -130,13 +135,17 @@
                        :my-c :c})
                  :e (component-e)}))
 
+;;; Macros disappear in .cljs - they are written in clojure
 (defmacro with-log [& body]
   `(binding [*log* []]
      ~@body
      *log*))
 
 (deftest components-start-in-order
-  (let [log (with-log (component/start (system-1)))]
+  (let [log #+clj (with-log (component/start (system-1)))
+            #+cljs (binding [*log* []]
+                     (component/start (system-1))
+                     *log*)]
     (are [k1 k2] (before? log k1 k2)
          'ComponentA.start 'ComponentB.start
          'ComponentA.start 'ComponentC.start
@@ -191,10 +200,10 @@
     (is (started? (-> ex ex-data :component :a)))
     (is (started? (-> ex ex-data :component :b)))))
 
+#+clj
 (deftest error-thrown-with-cause
   (let [error (ex-info "Boom!" {})
         ex (setup-error error)]
-    (println error ex)
     (is (identical? error (.getCause ex)))))
 
 (deftest error-is-from-component

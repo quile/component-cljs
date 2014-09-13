@@ -1,4 +1,4 @@
-(defproject quile/component "0.2.4-SNAPSHOT"
+(defproject quile/component "0.2.6-SNAPSHOT"
   :description "Managed lifecycle of stateful objects"
   :url "https://github.com/quile/component"
   :license {:name "The MIT License"

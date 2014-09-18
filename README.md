@@ -1,6 +1,9 @@
+(this is a fork of Stuart Sierra's [component](https://github.com/stuartsierra/component) library
+that builds for both Clojure and ClojureScript)
+
 # component
 
-'Component' is a tiny Clojure framework for managing the lifecycle of
+'Component' is a tiny Clojure/ClojureScript framework for managing the lifecycle of
 software components which have runtime state.
 
 This is primarily a design pattern with a few helper functions. It can

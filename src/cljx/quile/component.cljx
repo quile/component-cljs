@@ -95,22 +95,24 @@
              (dependencies component)))
 
 (defn- try-action [component system key f args]
-  (if (nil? f)
-    (println "Uh oh, nil function"))
-  (if (nil? component)
-    (println "Oh no! nil component"))
-  ;;;(println (str "Trying to call " (.toString f) " on " (.toString component)))
   (try (apply f component args)
-       (catch #+clj Throwable #+cljs js/Object t
-         (throw (ex-info (str "Error in component " key
-                              " in system " #+clj (.getName (class system)) #+cljs component
+       (catch #+clj Throwable #+cljs js/Error t
+         #+clj (throw (ex-info (str "Error in component " key
+                              " in system " (.getName (class system))
                               " calling " f)
                          {:reason ::component-function-threw-exception
                           :function f
                           :system-key key
                           :component component
                           :system system}
-                         t)))))
+                         t))
+         #+cljs (throw (ex-info (str "Error in component " + key)
+                         {:reason ::component-function-threw-exception
+                          :function f
+                          :component component
+                          :system system}
+                         t))
+         )))
 
 (defn- get-component [system key]
   (or (get system key)
@@ -126,6 +128,7 @@
   [system component-keys f & args]
   (let [graph (dependency-graph system component-keys)]
     (reduce (fn [system key]
+              (println key)
               (assoc system key
                      (-> (get-component system key)
                          (assoc-dependencies system)
@@ -151,9 +154,9 @@
   collection of keys (order doesn't matter) in the system specifying
   the components to start, defaults to all keys in the system."
   ([system]
-     (start-system system (keys system)))
+    (start-system system (keys system)))
   ([system component-keys]
-     (update-system system component-keys #+clj #'start #+cljs (aget quile.component "start"))))
+    (update-system system component-keys #+clj #'start #+cljs (aget quile.component "start"))))
 
 (defn stop-system
   "Recursively stops components in the system, in reverse dependency

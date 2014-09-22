@@ -1,10 +1,10 @@
-(ns quile.component-test
+(ns com.stuartsierra.component-test
   #+clj (:require [clojure.test :as t :refer (is deftest are)]
-                  [quile.component :as component]
+                  [com.stuartsierra.component :as component]
                   [clojure.set :refer (map-invert)])
   #+cljs (:require-macros [cemerick.cljs.test :refer (is deftest are)])
   #+cljs (:require cemerick.cljs.test
-                   [quile.component :as component])
+                   [com.stuartsierra.component :as component])
   )
 
 (def ^:dynamic *log* nil)

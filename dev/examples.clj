@@ -1,5 +1,5 @@
 (ns examples
-  (:require [quile.component :as component]))
+  (:require [com.stuartsierra.component :as component]))
 
 ;;; Dummy functions to use in the examples
 

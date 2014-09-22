@@ -214,6 +214,7 @@
 (deftest error-is-not-from-component
   (is (not (component/ex-component? (ex-info "Boom!" {})))))
 
+#+clj
 (deftest remove-components-from-error
   (let [error (ex-info (str (rand-int Integer/MAX_VALUE)) {})
         ^Exception ex (setup-error error)

@@ -174,6 +174,7 @@
   (stop [system]
     (stop-system system)))
 
+#+clj
 (defmethod clojure.core/print-method SystemMap
   [system ^java.io.Writer writer]
   (.write writer "#<SystemMap>"))

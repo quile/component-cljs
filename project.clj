@@ -26,7 +26,7 @@
 
   :cljsbuild {:test-commands {"tests"         ["phantomjs" "test/bin/runner-none.js"       "target/test"       "target/test.js"]
                               "node-tests"    ["node"      "test-node/bin/runner-none.js"  "target/test-node"  "target/test-node.js"]}
-              :builds [{:id "dependency"
+              :builds [{:id "component"
                         :source-paths ["target/classes"]
                         :compiler {:output-to "target/component.js"
                                    :optimizations :simple
@@ -47,12 +47,11 @@
                                   [org.clojure/tools.namespace "0.2.4"]
                                   [org.clojure/clojurescript "0.0-2322"]
                                   ]
-                   :source-paths ["target/classes"]
+                   :source-paths ["target/classes" "dev"]
                    :plugins      [[com.keminglabs/cljx "0.4.0" :exclusions [org.clojure/clojure]]
                                   [com.cemerick/clojurescript.test "0.3.1"]
                                   [org.bodil/lein-noderepl "0.1.11"]
-                                  [lein-cljsbuild "1.0.4-SNAPSHOT"]]
-                   :source-paths ["dev"]}
+                                  [lein-cljsbuild "1.0.4-SNAPSHOT"]]}
              :clj1.7 {:dependencies [[org.clojure/clojure "1.7.0-master-SNAPSHOT"]]
                       :repositories {"sonatype-oss-public"
                                      "https://oss.sonatype.org/content/groups/public"}}

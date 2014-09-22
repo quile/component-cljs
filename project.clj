@@ -8,6 +8,7 @@
   :global-vars {*warn-on-reflection* true}
   :aliases {"test-all"
             ["with-profile" "clj1.4:clj1.5:clj1.6:clj1.7" "test"]}
+
   :cljx {:builds [{:source-paths ["src/cljx"]
                    :output-path "target/classes"
                    :rules :clj}
@@ -45,8 +46,7 @@
                    :test-paths   ["target/test-classes"]
                    :dependencies [[org.clojure/clojure "1.6.0"]
                                   [org.clojure/tools.namespace "0.2.4"]
-                                  [org.clojure/clojurescript "0.0-2322"]
-                                  ]
+                                  [org.clojure/clojurescript "0.0-2322"]]
                    :source-paths ["target/classes" "dev"]
                    :plugins      [[com.keminglabs/cljx "0.4.0" :exclusions [org.clojure/clojure]]
                                   [com.cemerick/clojurescript.test "0.3.1"]
@@ -57,5 +57,4 @@
                                      "https://oss.sonatype.org/content/groups/public"}}
              :clj1.6 {:dependencies [[org.clojure/clojure "1.6.0"]]}
              :clj1.5 {:dependencies [[org.clojure/clojure "1.5.1"]]}
-
              :clj1.4 {:dependencies [[org.clojure/clojure "1.4.0"]]}})

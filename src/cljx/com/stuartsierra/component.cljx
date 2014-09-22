@@ -1,5 +1,5 @@
-(ns quile.component
-  (:require [quile.dependency :as dep]))
+(ns com.stuartsierra.component
+  (:require [com.stuartsierra.dependency :as dep]))
 
 (defprotocol Lifecycle
   (start [component]
@@ -127,7 +127,6 @@
   [system component-keys f & args]
   (let [graph (dependency-graph system component-keys)]
     (reduce (fn [system key]
-              (println key)
               (assoc system key
                      (-> (get-component system key)
                          (assoc-dependencies system)
@@ -155,7 +154,7 @@
   ([system]
     (start-system system (keys system)))
   ([system component-keys]
-    (update-system system component-keys #+clj #'start #+cljs (aget quile.component "start"))))
+    (update-system system component-keys #+clj #'start #+cljs (aget com.stuartsierra.component "start"))))
 
 (defn stop-system
   "Recursively stops components in the system, in reverse dependency
@@ -165,7 +164,7 @@
   ([system]
      (stop-system system (keys system)))
   ([system component-keys]
-     (update-system-reverse system component-keys #+clj #'stop #+cljs (aget quile.component "stop"))))
+     (update-system-reverse system component-keys #+clj #'stop #+cljs (aget com.stuartsierra.component "stop"))))
 
 (defrecord SystemMap []
   Lifecycle

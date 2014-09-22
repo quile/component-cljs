@@ -1,10 +1,10 @@
-(defproject quile/component "0.2.6-SNAPSHOT"
+(defproject com.stuartsierra/component "0.2.6-SNAPSHOT"
   :description "Managed lifecycle of stateful objects"
-  :url "https://github.com/quile/component"
+  :url "https://github.com/stuartsierra/component"
   :license {:name "The MIT License"
             :url "http://opensource.org/licenses/MIT"}
   :min-lein-version "2.1.3"  ; added :global-vars
-  :dependencies [[quile/dependency "0.1.4-SNAPSHOT"]]
+  :dependencies [[com.stuartsierra/dependency "0.1.4-SNAPSHOT"]]
   :global-vars {*warn-on-reflection* true}
 
   :cljx {:builds [{:source-paths ["src/cljx"]

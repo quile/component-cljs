@@ -4,7 +4,7 @@
   :license {:name "The MIT License"
             :url "http://opensource.org/licenses/MIT"}
   :min-lein-version "2.1.3"  ; added :global-vars
-  :dependencies [[com.stuartsierra/dependency "0.1.4-SNAPSHOT"]]
+  :dependencies [[com.stuartsierra/dependency "0.1.4-CLJX" :exclusions [org.clojure/clojure]]]
   :global-vars {*warn-on-reflection* true}
   :aliases {"test-all"
             ["with-profile" "clj1.4:clj1.5:clj1.6:clj1.7" "test"]}
@@ -47,7 +47,7 @@
                    :dependencies [[org.clojure/clojure "1.6.0"]
                                   [org.clojure/tools.namespace "0.2.4"]
                                   [org.clojure/clojurescript "0.0-2322"]]
-                   :source-paths ["target/classes" "dev"]
+                   :source-paths ["target/classes"]
                    :plugins      [[com.keminglabs/cljx "0.4.0" :exclusions [org.clojure/clojure]]
                                   [com.cemerick/clojurescript.test "0.3.1"]
                                   [org.bodil/lein-noderepl "0.1.11"]

@@ -1,5 +1,6 @@
 (this is a fork of Stuart Sierra's [component](https://github.com/stuartsierra/component) library
-that builds for both Clojure and ClojureScript)
+that builds for both Clojure and ClojureScript - do not contact Stuart about this; I am
+maintaining the ClojureScript library)
 
 If you lein install this, you can then add it as a dependency with version 0.2.3-CLJX.
 

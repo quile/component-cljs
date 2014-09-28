@@ -1,5 +1,5 @@
-(ns com.stuartsierra.component
-  (:require [com.stuartsierra.dependency :as dep]))
+(ns quile.component
+  (:require [quile.dependency :as dep]))
 
 (defprotocol Lifecycle
   (start [component]
@@ -66,7 +66,7 @@
 
 (defn dependency-graph
   "Returns a dependency graph, using the data structures defined in
-  com.stuartsierra.dependency, for the components found by
+  quile.dependency, for the components found by
   (select-keys system component-keys)"
   [system component-keys]
   (reduce-kv (fn [graph key component]
@@ -155,7 +155,7 @@
   ([system]
     (start-system system (keys system)))
   ([system component-keys]
-    (update-system system component-keys #+clj #'start #+cljs (aget com.stuartsierra.component "start"))))
+    (update-system system component-keys #+clj #'start #+cljs (aget quile.component "start"))))
 
 (defn stop-system
   "Recursively stops components in the system, in reverse dependency
@@ -165,7 +165,7 @@
   ([system]
      (stop-system system (keys system)))
   ([system component-keys]
-     (update-system-reverse system component-keys #+clj #'stop #+cljs (aget com.stuartsierra.component "stop"))))
+     (update-system-reverse system component-keys #+clj #'stop #+cljs (aget quile.component "stop"))))
 
 (defrecord SystemMap []
   Lifecycle
@@ -188,7 +188,7 @@
   with large objects. As a consequence, printed system maps cannot be
   'read'. To disable this behavior and print system maps like normal
   records, call
-  (remove-method clojure.core/print-method com.stuartsierra.component.SystemMap)"
+  (remove-method clojure.core/print-method quile.component.SystemMap)"
   [& keyvals]
   ;; array-map doesn't check argument length (CLJ-1319)
   (when-not (even? (count keyvals))
@@ -198,16 +198,16 @@
 
 (defn ex-component?
   "True if the java.lang.Throwable has ex-data indicating it was
-  thrown by something in the com.stuartsierra.component namespace."
+  thrown by something in the quile.component namespace."
   [throwable]
   (let [{:keys [reason]} (ex-data throwable)]
     (and (keyword? reason)
-         (= "com.stuartsierra.component"
+         (= "quile.component"
             (namespace reason)))))
 
 (defn ex-without-components
   "If the java.lang.Throwable has ex-data provided by the
-  com.stuartsierra.component namespace, returns a new exception
+  quile.component namespace, returns a new exception
   instance with the :component and :system removed from its ex-data.
   Preserves the message, cause, and stacktrace of the original
   throwable. If the throwable was not created by this namespace,

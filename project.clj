@@ -1,10 +1,10 @@
-(defproject com.stuartsierra/component "0.2.3-SNAPSHOT"
+(defproject quile/component-cljs "0.2.3"
   :description "Managed lifecycle of stateful objects"
-  :url "https://github.com/stuartsierra/component"
+  :url "https://github.com/quile/component-cljs"
   :license {:name "The MIT License"
             :url "http://opensource.org/licenses/MIT"}
   :min-lein-version "2.1.3"  ; added :global-vars
-  :dependencies [[com.stuartsierra/dependency "0.1.4-CLJX" :exclusions [org.clojure/clojure]]]
+  :dependencies [[quile/dependency-cljs "0.1.4" :exclusions [org.clojure/clojure]]]
   :global-vars {*warn-on-reflection* true}
   :aliases {"test-all"
             ["with-profile" "clj1.4:clj1.5:clj1.6:clj1.7" "test"]}
@@ -25,8 +25,7 @@
                    :output-path "target/test-classes"
                    :rules :cljs}]}
 
-  :cljsbuild {:test-commands {"tests"         ["phantomjs" "test/bin/runner-none.js"       "target/test"       "target/test.js"]
-                              "node-tests"    ["node"      "test-node/bin/runner-none.js"  "target/test-node"  "target/test-node.js"]}
+  :cljsbuild {:test-commands {"node"    ["node" "test-node/bin/runner-none.js" "target/test-node" "target/test-node.js"]}
               :builds [{:id "component"
                         :source-paths ["target/classes"]
                         :compiler {:output-to "target/component.js"

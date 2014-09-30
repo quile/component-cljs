@@ -1,4 +1,4 @@
-(defproject quile/component-cljs "0.2.3"
+(defproject quile/component-cljs "0.2.2"
   :description "Managed lifecycle of stateful objects"
   :url "https://github.com/quile/component-cljs"
   :license {:name "The MIT License"

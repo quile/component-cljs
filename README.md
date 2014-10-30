@@ -11,6 +11,9 @@ maintaining the ClojureScript library.
 **NOTE:** There's a bad release on clojars with version 0.2.3.  Don't try to use it.
 
 
+# Thanks
+
+I was able to use the excellent [node test runner](https://github.com/mike-thompson-day8/cljsbuild-none-test-seed) from https://github.com/mike-thompson-day8/cljsbuild-none-test-seed - thanks for this!
 
 ## Copyright and License
 

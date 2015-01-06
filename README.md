@@ -6,9 +6,7 @@ maintaining the ClojureScript library.
 
 [Leiningen] dependency information:
 
-    [quile/component "0.2.2"]
-
-**NOTE:** There's a bad release on clojars with version 0.2.3.  Don't try to use it.
+    [quile/component "0.2.4"]
 
 
 # Thanks

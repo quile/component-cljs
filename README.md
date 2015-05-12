@@ -6,7 +6,7 @@ maintaining the ClojureScript library.
 
 [Leiningen] dependency information:
 
-    [quile/component "0.2.4"]
+    [quile/component-cljs "0.2.4"]
 
 
 # Thanks
